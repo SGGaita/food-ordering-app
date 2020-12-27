@@ -4,9 +4,20 @@ import * as Location from 'expo-location';
 
 import { useNavigation } from '../utils'
 
+import {connect} from 'react-redux'
+import {onUpdateLocation, UserState, ApplicationState} from '../redux'
+ 
+
 const screenWidth = Dimensions.get('screen').width
 
-export const SplashScreen = () => {
+interface SplashProps{
+  userReducer: UserState,
+  onUpdateLocation: Function
+}
+
+const _SplashScreen: React.FC<SplashProps> = (props) => {
+
+  const {userReducer, onUpdateLocation} = props
 const { navigate } = useNavigation()
 const [errorMsg, setErrorMsg] = useState("")
 const [address, setAddress] = useState<Location.Address>()
@@ -32,7 +43,8 @@ useEffect(() => {
 
         for(let item of addressResponse){
           setAddress(item)
-          let currentAddress = `${item.name},${item.street},${item.district}, ${item.city}, ${item.country}`
+          onUpdateLocation(address)
+          let currentAddress = `${item.name},${item.district}, ${item.city}, ${item.country}`
           setDisplayAddress(currentAddress)
 
           if(currentAddress.length > 0){
@@ -118,3 +130,11 @@ welcomeContainer:{
    }
     
   });
+
+  const mapToStateProps = (state: ApplicationState) => ({
+    userReducer: state.userReducer
+  })
+
+  const SplashScreen = connect(mapToStateProps, {onUpdateLocation})(_SplashScreen)
+
+  export {SplashScreen}

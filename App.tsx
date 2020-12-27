@@ -31,6 +31,11 @@ const switchNavigator = createSwitchNavigator({
     Home: {
       screen: createStackNavigator({
         Home: HomeScreen,
+      },
+      {
+        defaultNavigationOptions: {
+          headerShown: false,
+        },
       }),
       navigationOptions: {
         tabBarIcon: ({ focused, tintColor }) => {
