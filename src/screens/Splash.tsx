@@ -50,14 +50,13 @@ useEffect(() => {
           if(currentAddress.length > 0){
               setTimeout(() =>{
                   navigate('homeStack')
-              }, 10000)
+              }, 5000)
           }
          return;
        
       }
       }else{
-        //error message
-
+        
       }
       
           

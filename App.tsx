@@ -4,6 +4,9 @@ import { StyleSheet, Text, View, Image } from "react-native";
 import { HomeScreen } from "./src/screens/Homescreen";
 import { SplashScreen } from "./src/screens/Splash";
 import { Account } from "./src/screens/Account";
+import {OfferScreen} from "./src/screens/Offer";
+import {CartScreen} from "./src/screens/Cart"
+import {SearchScreen} from "./src/screens/SearchScreen";
 import { store } from "./src/redux/index";
 
 import { createAppContainer, createSwitchNavigator } from "react-navigation";
@@ -31,6 +34,7 @@ const switchNavigator = createSwitchNavigator({
     Home: {
       screen: createStackNavigator({
         Home: HomeScreen,
+        SearchPage: SearchScreen
       },
       {
         defaultNavigationOptions: {
@@ -51,7 +55,7 @@ const switchNavigator = createSwitchNavigator({
     // Home tab Icon
     Offer: {
       screen: createStackNavigator({
-        Offers: HomeScreen, //
+        Offers: OfferScreen, //
       }),
       navigationOptions: {
         tabBarIcon: ({ focused, tintColor }) => {
@@ -67,7 +71,7 @@ const switchNavigator = createSwitchNavigator({
     // Home tab Icon
     Cart: {
       screen: createStackNavigator({
-        Cart: HomeScreen,
+        Cart: CartScreen,
       }),
       navigationOptions: {
         tabBarIcon: ({ focused, tintColor }) => {

@@ -7,22 +7,34 @@ export interface CategoryModel {
 }
 
 export interface RestaurantModel {
-  id_restaurant: number;
-  restaurant_name: string;
-  restaurant_description: string;
-  image: string;
+  id_supplier: number;
+  supplier_name: string;
+  supplier_description: string;
+  supplier_image: string;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
-export interface foodModel {
+export interface FoodModel {
   id_product: number;
-  id_product_category_fk: number;
-  id_product_sub_cat_fk: number;
-  id_supplier_fk: number;
+  id_product_category: number;
+  id_product_sub_cat: number;
+  id_supplier: number;
+  category: string;
+  subcategory:string;
+  store:string;
   product_name: string;
   product_description: string;
   image: string;
   images: string;
   product_price: number;
+  quantity:number
+}
+
+export interface foodAvailability{
+  categories: CategoryModel;
+  restaurant: RestaurantModel;
+  food: FoodModel
 }
 
 export interface UserModel {
@@ -41,6 +53,6 @@ export interface UserState{
 }
 
 export interface RestaurantState{
-    restaurant: RestaurantModel
+    restaurants_avail: RestaurantModel;
     //add others
 }

@@ -3,6 +3,7 @@ import {combineReducers} from 'redux'
 import {RestaurantReducer} from './restaurantReducer'
 import {UserReducer} from './userReducer'
 
+
 const rootReducer = combineReducers({
 
     userReducer: UserReducer,

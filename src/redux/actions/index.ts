@@ -1,3 +1,3 @@
 export {UserAction,onUpdateLocation} from './userAction'
-export {RestaurantAction, onRestaurantFind} from './restaurantAction'
+export {RestaurantAction, getRestaurants} from './restaurantAction'
 //export {ShoppingAction} from './shoppingAction'
