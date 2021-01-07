@@ -1,13 +1,13 @@
 import React, {useState, useEffect} from 'react'
 import {StyleSheet,View,Text,TouchableOpacity, TextInput, Image, ImageSourcePropType} from 'react-native'
 
-interface MenuButtonProps{
+interface ButtonWithIconProps{
     onTap:Function;
     width: number;
     height: number;
     icon: ImageSourcePropType
 }
-const MenuButton: React.FC<MenuButtonProps> = ({onTap,icon,width,height})=> {
+const ButtonWithIcon: React.FC<ButtonWithIconProps> = ({onTap,icon,width,height})=> {
 return (
     <TouchableOpacity style={[styles.btn, {width,height}]}
     onPress={() => onTap()}>
@@ -19,8 +19,8 @@ return (
 
 
 const styles = StyleSheet.create({
-btn: {flex: 1, backgroundColor: 'white'},
+btn: {flex: 1},
 
 })
 
-export {MenuButton}
+export {ButtonWithIcon}

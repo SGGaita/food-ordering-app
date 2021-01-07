@@ -13,6 +13,7 @@ export interface RestaurantModel {
   supplier_image: string;
   createdAt: Date;
   updatedAt: Date;
+  food: [FoodModel]
 }
 
 export interface FoodModel {
@@ -28,7 +29,7 @@ export interface FoodModel {
   image: string;
   images: string;
   product_price: number;
-  quantity:number
+  quantity:number,
 }
 
 export interface foodAvailability{
@@ -54,5 +55,7 @@ export interface UserState{
 
 export interface RestaurantState{
     restaurants_avail: RestaurantModel;
+    categories: CategoryModel;
+    food: FoodModel
     //add others
 }

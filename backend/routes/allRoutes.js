@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-//const productsController = require('../controllers/productsController');
+const productsController = require('../controllers/productsController');
 const restaurantController = require('../controllers/restaurantController');
 //const ordersController = require('../controllers/ordersController');
 //const paymentController = require('../controllers/paymentController');
@@ -59,7 +59,7 @@ router.get('/activation/:custID', authenticationController.accountActivationCust
 
 //3. Product Endpoints
 //a. Get all products
-//router.get ('/products', productsController.getAllProducts)
+router.get ('/products', productsController.getAllProducts)
 //b. Get one product by Product ID
 //router.get ('/products/:prodId', productsController.getProductById)
 //c. Get products by category

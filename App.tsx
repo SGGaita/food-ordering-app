@@ -1,12 +1,7 @@
 import { StatusBar } from "expo-status-bar";
 import React from "react";
 import { StyleSheet, Text, View, Image } from "react-native";
-import { HomeScreen } from "./src/screens/Homescreen";
-import { SplashScreen } from "./src/screens/Splash";
-import { Account } from "./src/screens/Account";
-import {OfferScreen} from "./src/screens/Offer";
-import {CartScreen} from "./src/screens/Cart"
-import {SearchScreen} from "./src/screens/SearchScreen";
+import {SplashScreen, HomeScreen, RestaurantScreen, Account, OfferScreen,CartScreen,SearchScreen, FoodDetailScreen } from "./src/screens/index";
 import { store } from "./src/redux/index";
 
 import { createAppContainer, createSwitchNavigator } from "react-navigation";
@@ -34,7 +29,9 @@ const switchNavigator = createSwitchNavigator({
     Home: {
       screen: createStackNavigator({
         Home: HomeScreen,
-        SearchPage: SearchScreen
+        SearchPage: SearchScreen,
+        RestaurantPage: RestaurantScreen,
+        FoodDetailPage: FoodDetailScreen
       },
       {
         defaultNavigationOptions: {
