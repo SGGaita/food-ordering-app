@@ -57,6 +57,11 @@ const FoodReducer = (state: RestaurantState = initialState, action: FoodAction) 
             food: action.payload
             
         }
+        case 'ON_RESTAURANT_FOOD':
+            return{
+                ...state,
+                food:action.payload
+            }
         default:
             //console.log("default state in restaurant reducer", state)
             return state

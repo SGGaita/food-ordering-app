@@ -167,9 +167,23 @@ const getProductsByCat = (req, res) => { // Sending Page Query Parameter is mand
 //Get categories
 const getCategories = (req, res) => {
     //let product_sub_cat = req.params.catName;
-    database.table('product_category')
-        .getAll()
-        .then(prod => {
+    database.table('product_category as c')
+    .join([{
+        table: "product_sub_category as s",
+        on: `s.id_product_cat_fk = c.id_product_cat `},
+        
+    ])
+    .withFields(['c.id_product_cat',
+        'c.prod_category_name as name',
+        's.id_product_sub_cat',
+        's.sub_name as subcategory',
+        's.icon'
+        
+    ]).sort({
+        id_product_cat_fk: .1
+    })
+    .getAll()
+    .then(prod => {
             console.log(prod);
             if (prod) {
                 res.status(200).json(prod);
@@ -251,4 +265,53 @@ const getDrinkCategories = (req, res) => { // Sending Page Query Parameter is ma
 
 }
 
-module.exports = {getAllProducts, getProductById, getProductsByCat, getCategories, getFoodCategories, getDrinkCategories};
+//Get products by supplier id
+//Get product by product id
+const getProductBySupplierId = (req, res) => {
+    let supplierId = req.params.supId;
+    database.table('product as p')
+    .join([{
+            table: "product_category as c",
+            on: `c.id_product_cat = p.id_product_cat_fk`
+        },
+        {
+            table: "product_sub_category as s",
+            on: `s.id_product_sub_cat = p.id_product_sub_cat_fk`
+        },
+        {
+            table: "suppliers as r",
+            on: `r.id_supplier = p.id_supplier_fk`
+        }
+    ])
+    .withFields(['c.id_product_cat',
+        'c.prod_category_name as category',
+        's.id_product_sub_cat',
+        's.sub_name as subcategory',
+        'r.id_supplier',
+        'r.supplier_name as store',
+        'p.id_product',
+        'p.product_name',
+        'p.product_price',
+        'p.quantity',
+        'p.product_description',
+        'p.image',
+        'p.images'
+
+    ])
+        .filter({
+            id_supplier : supplierId
+        })
+        .get()
+        .then(prod => {
+            console.log(prod);
+            if (prod) {
+                res.status(200).json(prod);
+            } else {
+                res.json({
+                    message: `No product found with id ${supplierId}`
+                });
+            }
+        }).catch(err => res.json(err));
+}
+
+module.exports = {getAllProducts, getProductById, getProductsByCat, getCategories, getFoodCategories, getDrinkCategories, getProductBySupplierId};

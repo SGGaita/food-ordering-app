@@ -22,8 +22,8 @@ export const getCategories = ()=>{
     return async(dispatch : Dispatch<CategoryAction>) =>{
         try{
             
-            const response = await axios.get<CategoryModel>(`${BASE_URL}/suppliers`)
-                 //console.log("respond now", response.data)
+            const response = await axios.get<CategoryModel>(`${BASE_URL}/categories`)
+                 console.log("categories", response.data)
                 if(response){
                     dispatch({
                         type: 'ON_GET_CATEGORIES',

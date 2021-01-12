@@ -15,15 +15,23 @@ import { connect, useDispatch, useSelector } from "react-redux";
 import {
   getRestaurants,
   getAllFoodItems,
+  getCategories,
   UserState,
   ApplicationState,
   RestaurantState,
   RestaurantModel,
   FoodModel,
+  CategoryModel,
 } from "../redux";
-import { ButtonWithIcon, SearchBar, RestaurantCard, CategoryCard } from "../components";
-import { BASE_URL, useNavigation } from "../utils";
-import axios from "axios";
+import {
+  ButtonWithIcon,
+  SearchBar,
+  RestaurantCard,
+  CategoryCard,
+  FastFoodCard,
+} from "../components";
+import {useNavigation } from "../utils";
+
 
 interface HomeProps {
   userReducer: UserState;
@@ -32,6 +40,8 @@ interface HomeProps {
   foodReducer: RestaurantState;
   getRestaurants: Function;
 }
+
+import SkeletonPlaceholder from "react-native-skeleton-placeholder";
 
 const _HomeScreen: React.FC<HomeProps> = (props) => {
   const { navigate } = useNavigation();
@@ -43,15 +53,21 @@ const _HomeScreen: React.FC<HomeProps> = (props) => {
     return state.restaurantReducer.restaurants_avail;
   });
   const _resta = Object.assign({}, restaurant);
-  console.log("Restaurant States array", restaurant);
+  //console.log("Restaurant States array", restaurant);
 
-  const food: any = useSelector((state:ApplicationState)=>{
+  const food: any = useSelector((state: ApplicationState) => {
     return state.foodReducer.food;
-  })
+  });
 
-  console.log("Food array", food)
+  const categories: any = useSelector((state: ApplicationState) => {
+    return state.categoryReducer.categories;
+  });
 
-  const dispatch = useDispatch()
+  console.log("Categories array", categories);
+
+  //console.log("Food array", food)
+
+  const dispatch = useDispatch();
 
   //console.log("suppliers", restaurants_avail)
 
@@ -64,9 +80,9 @@ const _HomeScreen: React.FC<HomeProps> = (props) => {
 
   useEffect(() => {
     (async () => {
-     
-      dispatch(getRestaurants())
-      dispatch(getAllFoodItems())
+      dispatch(getRestaurants());
+      dispatch(getAllFoodItems());
+      dispatch(getCategories());
       let address: any = location;
       const { coords } = address;
 
@@ -90,24 +106,29 @@ const _HomeScreen: React.FC<HomeProps> = (props) => {
         //error message
       }
     })();
-     
-   }, []);
+  }, []);
+
+  const onTapCategory = (item: CategoryModel) => {
+    navigate("CategoryPage", { categories: item });
+  };
 
   const onTapRestaurant = (item: RestaurantModel) => {
-    navigate('RestaurantPage', {restaurant: item})
-  }
+    navigate("RestaurantPage", { restaurant: item });
+  };
 
   const onTapFood = (item: FoodModel) => {
-    navigate('FoodDetailPage', {food: item}) 
-  }
+    navigate("FoodDetailPage", { food: item });
+  };
 
   return (
+   
     <View style={styles.container}>
+      
       <View style={styles.navigation}>
         <View
           style={{
             marginTop: 20,
-            flex: 4,
+            flex: 5,
             paddingLeft: 20,
             paddingRight: 20,
             justifyContent: "center",
@@ -117,6 +138,11 @@ const _HomeScreen: React.FC<HomeProps> = (props) => {
           <Text style={styles.address}>{displayAddress}</Text>
           <Text> Edit</Text>
         </View>
+
+        <View style={{flex:2}}>
+        
+        </View>
+
         <View
           style={{
             display: "flex",
@@ -125,8 +151,10 @@ const _HomeScreen: React.FC<HomeProps> = (props) => {
             flexDirection: "row",
             alignItems: "center",
             marginLeft: 4,
+            
           }}
         >
+          
           <SearchBar
             didTouch={() => {
               navigate("SearchPage");
@@ -143,71 +171,81 @@ const _HomeScreen: React.FC<HomeProps> = (props) => {
         </View>
       </View>
       <View style={styles.body}>
-      <ScrollView>
-        {Object.keys(_resta).length !== 0 ? (
-          
+        <ScrollView>
+          {Object.keys(categories).length !== 0 ? (
             <FlatList
               horizontal
               showsHorizontalScrollIndicator={false}
-              data={restaurant}
+              data={categories}
               renderItem={({ item }) => (
                 <CategoryCard
                   item={item}
-                  onTap={() => {
-                    alert("Category tapped");
-                  }}
+                  onTap={ onTapCategory }
                 />
               )}
-              keyExtractor={(item: any) => `${item.id_supplier}`}
+              keyExtractor={(item: any) => `${item.id_product_sub_cat}`}
             />
-        ) : (
-          <Text style={{ fontSize: 30 }}>Your list is empty :'(</Text>
-        )}
+          ) : (
+            <Text style={{ fontSize: 20, alignItems:'center' }}>Your list is empty :'(</Text>
+          )}
 
-        <View>
-          <Text style={{fontSize:25, fontWeight:'700', color: '#f15b5d',marginTop: 10, marginLeft:20}}>Top Restaurants</Text>
-        </View>
-        
-        {Object.keys(_resta).length !== 0 ? (
+          <View>
+            <Text
+              style={{
+                fontSize: 25,
+                fontWeight: "700",
+                color: "#f15b5d",
+                marginTop: 10,
+                marginLeft: 20,
+              }}
+            >
+              Top Restaurants
+            </Text>
+          </View>
+
+          {Object.keys(_resta).length !== 0 ? (
             <FlatList
               horizontal
               showsHorizontalScrollIndicator={false}
               data={restaurant}
               renderItem={({ item }) => (
-                <RestaurantCard
-                  item={item}
-                  onTap={onTapRestaurant
-                  }
-                />
+                <RestaurantCard item={item} onTap={onTapRestaurant} />
               )}
               keyExtractor={(item: any) => `${item.id_supplier}`}
             />
-        ) : (
-          <Text style={{ fontSize: 30 }}>Your list is empty :'(</Text>
-        )}
-        <View>
-          <Text style={{fontSize:25, fontWeight:'700', color: '#f15b5d',marginTop: 10, marginLeft:20}}>30 Minutes Dishes</Text>
-        </View>
+          ) : (
+            <Text style={{ fontSize: 30 }}>Your list is empty :'(</Text>
+          )}
+          <View>
+            <Text
+              style={{
+                fontSize: 25,
+                fontWeight: "700",
+                color: "#f15b5d",
+                marginTop: 10,
+                marginLeft: 20,
+              }}
+            >
+              30 Minutes Dishes
+            </Text>
+          </View>
 
-        {Object.keys(_resta).length !== 0 ? (
+          {Object.keys(_resta).length !== 0 ? (
             <FlatList
               horizontal
               showsHorizontalScrollIndicator={false}
               data={food}
               renderItem={({ item }) => (
-                <RestaurantCard
-                  item={item}
-                  onTap={onTapFood}
-                />
+                <FastFoodCard item={item} onTap={onTapFood} />
               )}
               keyExtractor={(item: any) => `${item.id_supplier}`}
             />
-        ) : (
-          <Text style={{ fontSize: 30 }}>Your list is empty :'(</Text>
-        )}
-
+          ) : (
+            <Text style={{ fontSize: 30 }}>Your list is empty :'(</Text>
+          )}
         </ScrollView>
       </View>
+
     </View>
   );
 };
@@ -219,9 +257,9 @@ const styles = StyleSheet.create({
   },
 
   navigation: {
-    flex:2,
-    fontWeight:'700',
-    backgroundColor: 'white',
+    flex: 2,
+    fontWeight: "700",
+    backgroundColor: "white",
   },
 
   address: {
@@ -230,13 +268,13 @@ const styles = StyleSheet.create({
 
   body: {
     flex: 13,
-    marginTop:10
+    marginTop: 10,
   },
 });
 
 const mapToStateProps = (state: ApplicationState) => ({
   userReducer: state.userReducer,
-  restaurantReducer: state.restaurantReducer,
+  //restaurantReducer: state.restaurantReducer,
 });
 
 const HomeScreen = connect(mapToStateProps, { getRestaurants })(_HomeScreen);

@@ -7,10 +7,10 @@ import {
   Image,
   ImageBackground,
 } from "react-native";
-import { ApplicationState, FoodModel, getAllFoodItems, RestaurantModel } from "../redux";
+import { ApplicationState, FoodModel, getAllFoodItems, getFoodItemsByRestaurant, RestaurantModel } from "../redux";
 import { ButtonWithIcon } from "../components";
 import { FlatList } from "react-native-gesture-handler";
-import { FoodCard } from "../components/FoodCard";
+import { FoodCard } from "../components";
 import { useNavigation } from "../utils/userNavigation";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -43,7 +43,7 @@ export const RestaurantScreen: React.FC<RestaurantProps> = (props) => {
   }
 
   useEffect(() => {
-    dispatch(getAllFoodItems())
+    dispatch(getFoodItemsByRestaurant(restaurant.id_supplier))
   }, [])
 
   return (
@@ -52,8 +52,8 @@ export const RestaurantScreen: React.FC<RestaurantProps> = (props) => {
         <ButtonWithIcon
           icon={require("../images/back_arrow.png")}
           onTap={() => goBack()}
-          width={22}
-          height={22}
+          width={20}
+          height={20}
         />
         <Text
           style={{
@@ -77,20 +77,22 @@ export const RestaurantScreen: React.FC<RestaurantProps> = (props) => {
           }}
         >
           <View style={{
-              height: 90,
-              backgroundColor: "rgba(0,0,0,0)",
+              height: 70,
+              backgroundColor: "rgba(5,0,0,0.5)",
               padding: 10,
             }}
           >
             <Text style={{ color: "#FFF", fontSize: 30 }}>
               {restaurant.supplier_name}
             </Text>
+            <Text style={{ color: "#FFF", fontSize: 15 }}>Location address</Text>
           </View>
+          
         </ImageBackground>
         <FlatList
         showsHorizontalScrollIndicator={false}
         data={food}
-        renderItem={({item}) => <FoodCard item={item} onTap={()=> alert("Do something")}/>}
+        renderItem={({item}) => <FoodCard item={item} onTap={onTapFood} onUpdateCart={()=>{}}/>}
         keyExtractor={(item:any)=> `${item.id_product}`}
         />
       </View>
@@ -105,7 +107,7 @@ const styles = StyleSheet.create({
   },
   navigation: {
     flex: 1,
-    marginTop: 43,
+    marginTop: 35,
     paddingLeft: 10,
     paddingRight: 10,
     flexDirection: "row",

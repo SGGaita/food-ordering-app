@@ -1,4 +1,4 @@
-export {UserAction,onUpdateLocation} from './userAction'
+export {UserAction,onUpdateLocation, onUpdateCart} from './userAction'
 export {RestaurantAction, getRestaurants} from './restaurantAction'
-export {FoodAction, getAllFoodItems} from './foodAction'
-//export {ShoppingAction} from './shoppingAction'
+export {FoodAction, getAllFoodItems, getFoodItemsByRestaurant} from './foodAction'
+export {CategoryAction,getCategories} from './categoryAction'

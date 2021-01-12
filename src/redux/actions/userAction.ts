@@ -3,6 +3,7 @@ import {Address} from 'expo-location'
 import {Dispatch} from 'react'
 import {BASE_URL} from '../../utils'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { FoodModel } from '../models'
 
 export interface UpdateLocationAction{
     readonly type : "ON_UPDATE_LOCATION";
@@ -14,7 +15,12 @@ export interface UserErrorAction{
     payload: any
 }
 
-export type UserAction = UpdateLocationAction | UserErrorAction
+export interface UpdateCartAction{
+    readonly type: 'ON_UPDATE_CART',
+    payload: FoodModel
+}
+
+export type UserAction = UpdateLocationAction |UpdateCartAction | UserErrorAction
 
 export const onUpdateLocation = (location: Address)=>{
     return async(dispatch : Dispatch<UserAction>) =>{
@@ -26,6 +32,24 @@ export const onUpdateLocation = (location: Address)=>{
            dispatch({
                type: 'ON_UPDATE_LOCATION',
                payload: location
+           })
+
+        }catch(error){
+            dispatch({
+                type: 'ON_USER_ERROR',
+                payload: error
+            })
+        }
+    }
+}
+
+
+export const onUpdateCart = (item: FoodModel)=>{
+    return async(dispatch : Dispatch<UserAction>) =>{
+        try{
+           dispatch({
+               type: 'ON_UPDATE_CART',
+               payload: item
            })
 
         }catch(error){

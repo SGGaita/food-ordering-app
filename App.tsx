@@ -1,7 +1,7 @@
 import { StatusBar } from "expo-status-bar";
 import React from "react";
 import { StyleSheet, Text, View, Image } from "react-native";
-import {SplashScreen, HomeScreen, RestaurantScreen, Account, OfferScreen,CartScreen,SearchScreen, FoodDetailScreen } from "./src/screens/index";
+import {SplashScreen, HomeScreen, RestaurantScreen, Account, OfferScreen,CartScreen,SearchScreen, FoodDetailScreen,CategoryScreen } from "./src/screens/index";
 import { store } from "./src/redux/index";
 
 import { createAppContainer, createSwitchNavigator } from "react-navigation";
@@ -30,6 +30,7 @@ const switchNavigator = createSwitchNavigator({
       screen: createStackNavigator({
         Home: HomeScreen,
         SearchPage: SearchScreen,
+        CategoryPage: CategoryScreen,
         RestaurantPage: RestaurantScreen,
         FoodDetailPage: FoodDetailScreen
       },
@@ -38,7 +39,10 @@ const switchNavigator = createSwitchNavigator({
           headerShown: false,
         },
       }),
+      
+
       navigationOptions: {
+        
         tabBarIcon: ({ focused, tintColor }) => {
           let icon =
             focused == true
@@ -48,6 +52,7 @@ const switchNavigator = createSwitchNavigator({
         },
       },
     },
+    
 
     // Home tab Icon
     Offer: {
@@ -95,7 +100,13 @@ const switchNavigator = createSwitchNavigator({
         },
       },
     },
-  }),
+  },{
+    tabBarOptions:{
+      activeTintColor:'red'
+    },
+  }
+  
+  ),
 });
 
 const AppNavigation = createAppContainer(switchNavigator);

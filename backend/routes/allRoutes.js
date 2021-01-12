@@ -62,10 +62,12 @@ router.get('/activation/:custID', authenticationController.accountActivationCust
 router.get ('/products', productsController.getAllProducts)
 //b. Get one product by Product ID
 //router.get ('/products/:prodId', productsController.getProductById)
+//b. Get one product by SUpplier ID
+router.get ('/products/supplier/:supId', productsController.getProductBySupplierId)
 //c. Get products by category
 //router.get('/category/:catName', productsController.getProductsByCat)
 //d. Get categories
-//router.get('/categories', productsController.getCategories)
+router.get('/categories', productsController.getCategories)
 //e. Get subcategories in food category
 //router.get('/category_food', productsController.getFoodCategories)
 //f. Get subcategories in drink category

@@ -10,14 +10,24 @@ import {
 import { CategoryModel } from "../redux";
 
 interface CategoryCardProps {
-  item: CategoryModel;
+  item: any;
   onTap: Function;
 }
 const CategoryCard: React.FC<CategoryCardProps> = ({ item, onTap }) => {
   return (
     <TouchableOpacity style={styles.container} onPress={() => onTap(item)}>
-      <Image source={{ uri: `${item.icon}` }} style={{width:100,height:100, borderRadius:20,backgroundColor:"#eaeaea"}} />
-      <Text style={{fontSize:14,marginTop:15,color:'#858585'}}>CatName</Text>
+      <Image
+        source={{ uri: `${item.icon}` }}
+        style={{
+          width: 90,
+          height: 90,
+          borderRadius: 20,
+          backgroundColor: "#eaeaea",
+        }}
+      />
+      <Text style={{ fontSize: 14, marginTop: 15, color: "#858585" }}>
+        {item.subcategory}
+      </Text>
     </TouchableOpacity>
   );
 };

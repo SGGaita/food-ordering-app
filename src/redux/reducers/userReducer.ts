@@ -1,12 +1,12 @@
 import { Address } from 'expo-location'
 import {UserAction} from '../actions/index'
-import {UserState, UserModel} from '../models'
+import {UserState, UserModel, FoodModel} from '../models'
 
 const initialState: UserState = {
     user: {} as UserModel,
     location: {} as Address,
-    error: undefined
-
+    error: undefined,
+    Cart:{} as [FoodModel]
 }
 
 const UserReducer = (state: UserState = initialState, action: UserAction ) =>{
@@ -19,7 +19,7 @@ switch(action.type){
         location: action.payload
     }
     default:
-        console.log("default state in location reducer", state) //works
+       // console.log("default state in location reducer", state) //works
         return state
 }
 

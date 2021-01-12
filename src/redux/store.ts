@@ -10,6 +10,6 @@ const store = createStore(rootReducer,composeWithDevTools(
      applyMiddleware(thunk))
      )
 
-     console.log("Value of store state", store.getState())
+     //console.log("Value of store state", store.getState())
 
 export {store};

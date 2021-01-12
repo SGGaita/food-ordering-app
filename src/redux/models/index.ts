@@ -1,8 +1,9 @@
 import {Address} from 'expo-location'
 
 export interface CategoryModel {
+  id_product_cat:number;
   name: string;
-  category: string;
+  subcategory: string;
   icon: string;
 }
 
@@ -30,6 +31,7 @@ export interface FoodModel {
   images: string;
   product_price: number;
   quantity:number,
+  unit:number
 }
 
 export interface foodAvailability{
@@ -50,7 +52,8 @@ export interface UserModel {
 export interface UserState{
     user: UserModel;
     location: Address;
-    error: string | undefined
+    error: string | undefined;
+    Cart:[FoodModel]
 }
 
 export interface RestaurantState{

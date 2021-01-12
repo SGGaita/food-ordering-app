@@ -20,9 +20,10 @@ export interface FoodErrorAction{
     payload: any
 }
 
-export type FoodAction = FoodFindAction | FoodErrorAction
+export type FoodAction = FoodFindAction| FoodByRestaurantAction | FoodErrorAction
 
 //Trigger action from components
+//get all food items
 export const getAllFoodItems = ()=>{
     return async(dispatch : Dispatch<FoodAction>) =>{
         try{
@@ -48,6 +49,35 @@ export const getAllFoodItems = ()=>{
             //save location in local storage
            
            
+
+        }catch(error){
+            dispatch({
+                type: 'ON_FOOD_ERROR',
+                payload: error
+            })
+        }
+    }
+}
+
+export const getFoodItemsByRestaurant = (restID: number)=>{
+    return async(dispatch : Dispatch<FoodAction>) =>{
+        try{
+            
+            const response = await axios.get<FoodModel>(`${BASE_URL}/products/supplier/${restID}`)
+                 console.log("Food from restaurant", response.data)
+                if(response){
+                    dispatch({
+                        type: 'ON_RESTAURANT_FOOD',
+                        payload: response.data
+                    })
+                   
+                } else {
+                   // console.log("This ON GET RESTAURANT was sellected")
+                   dispatch({
+                    type: 'ON_FOOD_ERROR',
+                    payload: 'FOOD UNAVAILABLE'
+                })
+                }  
 
         }catch(error){
             dispatch({

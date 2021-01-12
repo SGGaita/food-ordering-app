@@ -1,5 +1,5 @@
 import React, {useState, useReducer, useEffect} from 'react'
-import { StyleSheet, Text, View, Dimensions,Image } from 'react-native';
+import { StyleSheet, Text, View, Dimensions,Image, ImageBackground } from 'react-native';
 import * as Location from 'expo-location';
 
 import { useNavigation } from '../utils'
@@ -74,13 +74,21 @@ useEffect(() => {
 
      return (
         <View style={styles.container}>
-        
+        <ImageBackground
+          source={require('../images/splashbg.png')}
+          style={{
+            width: Dimensions.get("screen").width,
+            height: Dimensions.get("screen").height,
+            justifyContent: "flex-end"    
+          }}
+        >
         <View style={styles.body}>
-            <Image source={require('../images/logo-bw.png')} style={styles.logo}/>
+         <Image source={require('../images/logo-bw.png')} style={styles.logo}/>
             <View style={styles.welcomeContainer}>
             <Text style={styles.welcome}>Welcome to food ordering app</Text></View>
             <Text style={styles.location}>{displayAddress}</Text>
             </View>
+            </ImageBackground>
       </View>
      )
 
