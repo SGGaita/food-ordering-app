@@ -36,8 +36,7 @@ useEffect(() => {
       //let exactAddress: any = Location.reverseGeocodeAsync(address)
       const {coords} = address
     
-    
-      if(coords){
+    if(coords){
         const {latitude, longitude} = coords
         let addressResponse:any = await Location.reverseGeocodeAsync({latitude,longitude})
 
@@ -53,19 +52,11 @@ useEffect(() => {
               }, 5000)
           }
          return;
-       
       }
       }else{
-        
+        //some code here
       }
-      
-          
-
-          
-
-      
-     
-    })();
+      })();
   }, []);
 
   

@@ -43,7 +43,7 @@ export const RestaurantScreen: React.FC<RestaurantProps> = (props) => {
   }
 
   useEffect(() => {
-    dispatch(getFoodItemsByRestaurant(restaurant.id_supplier))
+    dispatch(getFoodItemsByRestaurant(+restaurant.id_supplier))
   }, [])
 
   return (
